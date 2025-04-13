@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+![Image](https://github.com/user-attachments/assets/e75216a4-3346-4749-9eff-2ea68742330d)
 
-## Getting Started
+# 🛍️ E-Commerce Platform >> Online Grocery Shopping Center (Bacola)
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+A modern full-stack e-commerce solution with secure payments, robust authentication, and advanced admin dashboard.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ✨ Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 💳 Payment System
+- **Stripe Integration** - Secure online payments
+- **Cash on Delivery** - Pay when you receive your order
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 🔐 Authentication & Authorization
+- **JWT Authentication** - Secure access tokens
+- **Role-Based Access Control**:
+  - 👨‍💼 Admin - Full system control
+  - 👔 Manager - Limited admin privileges
+  - 👤 End User - Customer access
+- **Multi-Login Options**:
+  - 📧 Email/password signup & login
+  - 🔵 Google OAuth integration
 
-## Learn More
+### 🛒 E-Commerce Core
+- 🏪 Product catalog with categories
+- 🛍️ Shopping cart functionality
+- 💝 Wishlist system
+- 🏷️ Coupon/discount code system
+- 📊 Order tracking
+- 📖 "About Us" page with company story
+- ✉️ Contact page with form & business info
 
-To learn more about Next.js, take a look at the following resources:
+![Image](https://github.com/user-attachments/assets/aac70a62-0f0c-4b99-9913-bd4deda9ce57)
+### 📊 Admin Dashboard
+- 🧑‍💼 User management & analytics
+- 📦 Product management & analytics
+- 🗂️ Category management & analytics
+- 📈 Order statistics & analytics
+- ✉️ Messages/communications
+- 🎨 App layout customization
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 🎨 UI/UX
+- Modern design with **Tailwind CSS**
+- Beautiful components using **shadcn/ui**
+- Responsive layout
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 🔒 Security
+- Data protection measures
+- Secure payment processing
+- Input validation
+- Rate limiting
 
-## Deploy on Vercel
+## 🚀 Technologies Used
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Frontend**: React.js, Next.js, Tailwind CSS, Shadcn/ui, Typescript
+- **Backend**: Nextjs Server Actions
+- **Database**: Prisma/PostgreSQL
+- **cloud**: Cloudinary
+- **Authentication**: JWT, OAuth
+- **Payments**: Stripe API
+- **State Management**: React Context
