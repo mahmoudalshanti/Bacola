@@ -1,0 +1,269 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  password    String
+  fName       String
+  lName       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime? @updatedAt
+  dateOfBirth DateTime
+  country     Json 
+  resetPasswordToken         String?
+  resetPasswordTokenExpiresAt DateTime?
+
+  // Relations
+  Orders Order[]
+  Cart   Cart?
+  Wishlist Wishlist?
+  ratings Rating[]
+  Coupon Coupon[]
+  shipping Float
+}
+
+model PendingUser {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime? @updatedAt
+  country   Json
+  verificationCode VerificationCode? @relation("PendingUserVerification")
+  OAuth Boolean @default(false)
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  role      String   @default("admin")
+  verificationCode VerificationCode? @relation("AdminVerification")
+}
+
+model Manager {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime? @updatedAt
+  role      String   @default("manager")
+  verificationCode VerificationCode? @relation("ManagerVerification")
+}
+
+model VerificationCode {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  createdAt DateTime @default(now())
+  expireIn  DateTime
+  pendingUserId String? @unique
+  adminId       String? @unique
+  managerId     String? @unique
+  
+  // Relations with onDelete only on this side
+  pendingUser PendingUser? @relation("PendingUserVerification", fields: [pendingUserId], references: [id], onDelete: Cascade)
+  admin       Admin?       @relation("AdminVerification", fields: [adminId], references: [id], onDelete: Cascade)
+  manager     Manager?     @relation("ManagerVerification", fields: [managerId], references: [id], onDelete: Cascade)
+}
+
+model Category {
+  id   String   @id @default(cuid())
+  name String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime? @updatedAt
+  products Product[] 
+  image    String
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String 
+  images      Json     @default("[]")
+  description String
+  rate        Float 
+  price       Float
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime? @updatedAt
+  isFeatured  Boolean?
+  offer       Float?
+  categoryId  String
+  sizes       String[]
+  type        String?
+  
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  orderItems  OrderItem[]
+  cartItems   CartItem[]
+  wishlist    WishlistItem[]
+  ratings     Rating[]
+  hotProduct HotProduct[]
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  track           String      @unique 
+  totalAmount     Float 
+  sessionId       String      @unique
+  status          OrderStatus
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  method          MethodStatus
+  comment         String?
+  country         Json
+  street          String
+  city            String
+  zipCode         String
+  
+  items  OrderItem[]
+  userId String
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  quantity  Float
+  price     Float
+
+  productId String  
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  orderId   String
+  order     Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
+
+model Cart {
+  id     String @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime? @updatedAt
+  userId String @unique
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items  CartItem[]
+}
+
+
+model CartItem {
+  id        String @id @default(cuid())
+  quantity  Float
+  totalPrice Float
+
+  cartId    String
+  cart      Cart @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model Wishlist {
+  id     String @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime? @updatedAt
+  userId String @unique
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items  WishlistItem[]
+}
+
+model WishlistItem {
+  id        String @id @default(cuid())
+  createdAt DateTime @default(now())
+  
+  wishlistId String
+  wishlist   Wishlist @relation(fields: [wishlistId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model Rating {
+  id          String   @id @default(cuid())
+  rating      Int      @default(0)
+  comment     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime? @updatedAt
+  
+  userId      String
+  user        User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  productId   String
+  product     Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
+}
+
+model Coupon {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime? @updatedAt
+  discountPercentage Float
+  expirationDate DateTime
+  isActive Boolean
+  code String @unique
+  
+  userId String
+  user    User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Shipping {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime? @updatedAt
+  shipping    Float  @default(100)
+}
+
+model Slider{
+id          String   @id @default(cuid())
+createdAt   DateTime @default(now())
+updatedAt   DateTime? @updatedAt
+
+image        String
+title        String
+subtitle     String
+description  String
+
+buttonText   String
+buttonLink   String
+}
+
+model AppbarText {
+id          String   @id @default(cuid())
+createdAt   DateTime @default(now())
+updatedAt   DateTime? @updatedAt
+
+text        String
+link        String?
+}
+
+model HotProduct{
+id          String   @id @default(cuid())
+createdAt   DateTime @default(now())
+updatedAt   DateTime? @updatedAt
+
+prodId      String
+
+product  Product  @relation( fields: [prodId],references: [id], onDelete: Cascade)
+
+}
+
+model Message{
+  id String @id @default(cuid())
+  createdAt   DateTime @default(now())
+
+  isUser Boolean @default(false)
+  email String
+  name String
+  subject String
+  message String
+}
+
+enum OrderStatus {
+  PENDING
+  SHIPPED
+  DELIVERED
+  CANCELED
+}
+
+enum MethodStatus {
+  paypal
+  stripe
+  cash
+}
