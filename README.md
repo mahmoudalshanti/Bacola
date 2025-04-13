@@ -1,3 +1,5 @@
+![Image](https://github.com/user-attachments/assets/e75216a4-3346-4749-9eff-2ea68742330d)
+
 # 🛍️ E-Commerce Platform >> Online Grocery Shopping Center (Bacola)
 
 
