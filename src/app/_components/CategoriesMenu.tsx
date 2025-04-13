@@ -76,14 +76,20 @@ const CategoriesButton = () => {
   const { setOpen } = useMenu();
   const { data } = useSession();
   const { setUser } = useUser();
+  const router = useRouter();
 
   useEffect(() => {
     const handelGoogleSignInContinue = async () => {
       try {
         if (data) {
           const result = await actionContinueGoogle(data?.user?.email || "");
-          const user = await getUser();
-          setUser(user);
+          if (result.redirect === "/") {
+            const user = await getUser();
+            if (user?.email) setUser(user);
+          } else {
+            router.push(result?.redirect || "/");
+          }
+
           if ("errMsg" in result)
             if (result.errMsg) throw new Error(result.errMsg);
         }

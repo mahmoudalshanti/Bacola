@@ -19,7 +19,6 @@ function SignIn({ open = true }: { open?: boolean }) {
   const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [errMsg, setErrMsg] = useState<string>("");
-  const router = useRouter();
   const [hide, setHide] = useState<boolean>(true);
   const { setUser } = useUser();
 
