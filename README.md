@@ -30,6 +30,7 @@ A modern full-stack e-commerce solution with secure payments, robust authenticat
 - 📖 "About Us" page with company story
 - ✉️ Contact page with form & business info
 
+![Image](https://github.com/user-attachments/assets/aac70a62-0f0c-4b99-9913-bd4deda9ce57)
 ### 📊 Admin Dashboard
 - 🧑‍💼 User management & analytics
 - 📦 Product management & analytics
