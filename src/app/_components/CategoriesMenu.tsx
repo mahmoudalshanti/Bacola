@@ -116,17 +116,19 @@ export const CategoriesContent = ({
 }: {
   categories: Category[];
 }) => {
-  const router = useRouter();
   const { setOrderFilter } = useMenu();
   const [hover, setHover] = useState<string>("");
 
   return (
     <motion.div
-      initial={{ height: 0 }}
-      animate={{ height: "auto" }}
-      exit={{ height: 0 }}
-      transition={{ ease: "easeInOut" }}
-      className="px-4 xl:px-20 left-0 bg-none xl:top-[100.5%] xl:absolute mx-auto block xl:grid grid-cols-1 md:grid-cols-12 gap-4 w-full h-fit mb-0 xk:mb-5 xl:p-0"
+      initial={{ height: 0, opacity: 0 }}
+      animate={{ height: "auto", opacity: 1 }}
+      exit={{ height: 0, opacity: 0 }}
+      transition={{
+        ease: "easeInOut",
+        duration: 0.3,
+      }}
+      className="px-4 xl:px-20 left-0 bg-none xl:top-[100.5%] xl:absolute mx-auto block xl:grid grid-cols-1 md:grid-cols-12 gap-4 w-full h-fit mb-0 xl:p-0"
     >
       <div className="col-span-12 w-full md:col-span-3 pt-3 xl:pt-5 z-20 bg-white xl:border xl:border-t-transparent">
         {categories?.map((category: Category) => {
@@ -153,17 +155,16 @@ export const CategoriesContent = ({
           onClick={() => {
             setOrderFilter("topOffer");
           }}
-          className="px-0  mt-2 xl:px-5 mb-2 text-slate-700 text-sm font-bold text-start hover:text-cyan-500"
+          className="px-0 flex  w-full  mt-2 text-base xl:px-5 text-slate-700 xl:text-sm font-bold text-start hover:text-cyan-500"
         >
           Top 100 Offer
         </Link>
-        <br />
         <Link
           href={"/product-category"}
           onClick={() => {
             setOrderFilter("latest");
           }}
-          className="px-0 xl:px-5  text-start text-sm text-slate-700 font-bold hover:text-cyan-500"
+          className="px-0 flex xl:px-5 my-1 text-start text-base xl:text-sm text-slate-700 font-bold hover:text-cyan-500"
         >
           New Arrivals
         </Link>
