@@ -1416,7 +1416,6 @@ export const actionGetRating = async (prodId: string) => {
           fName: user?.id === rating.userId ? "You" : rating.user?.fName,
         },
       }));
-
       return {
         rates: enhancedRatings,
         ratedUser: !!userRating,

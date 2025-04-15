@@ -10,7 +10,9 @@ import React, {
 } from "react";
 import getUser from "../_components/getUser";
 import PageLoading from "@/components/PageLoading";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { actionContinueGoogle } from "../sign-in/_actions/actionSignIn";
 
 interface User {
   id: string;
@@ -37,6 +39,8 @@ function UserProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const pathname = usePathname();
+  const { data } = useSession();
+  const router = useRouter();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -53,6 +57,28 @@ function UserProvider({ children }: { children: ReactNode }) {
 
     fetchUser();
   }, [pathname]);
+
+  useEffect(() => {
+    const handelGoogleSignInContinue = async () => {
+      try {
+        if (data) {
+          const result = await actionContinueGoogle(data?.user?.email || "");
+          if (result.redirect === "/") {
+            const user = await getUser();
+            if (user?.email) setUser(user);
+          } else {
+            router.push(result?.redirect || "/");
+          }
+
+          if ("errMsg" in result)
+            if (result.errMsg) throw new Error(result.errMsg);
+        }
+      } catch (err) {
+        console.error("Something went error by google auth", err);
+      }
+    };
+    handelGoogleSignInContinue();
+  }, [data]);
 
   return (
     <userContext.Provider value={{ user, setUser, setOpen, open }}>

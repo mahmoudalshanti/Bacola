@@ -7,18 +7,18 @@ import TopBar from "./TopBar";
 import SearchBar from "./SearchBar";
 import CartBar from "./CartBar";
 import DownBar from "./DownBar";
-import { actionGetText } from "../dashboard/_actions/actionDashboard";
 
 function AppBarMobile({
   categories,
   cart,
+  textAppbar,
 }: {
   categories: Category[];
   cart: Cart;
+  textAppbar: string;
 }) {
   const [hideBanner, setHideBanner] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
-  const [text, setText] = useState<string>("");
 
   useEffect(() => {
     // Check screen size on mount & on resize
@@ -42,19 +42,6 @@ function AppBarMobile({
     };
   }, [isMobile]);
 
-  useEffect(() => {
-    const fetchAppbarText = async () => {
-      try {
-        const textAppbar = (await actionGetText()) as string;
-        setText(textAppbar);
-        if (textAppbar) throw new Error("Failed to fetch text for AppBar");
-      } catch (err) {
-        console.error("Something went wrong!", err);
-      }
-    };
-
-    fetchAppbarText();
-  }, []);
   return (
     <>
       <div className="w-full fixed top-0 left-0 bg-white z-50 border-b border-gray-200 shadow-md transition-all duration-300">
@@ -68,7 +55,7 @@ function AppBarMobile({
           transition={{ duration: 0.3, ease: "easeInOut" }}
           className="bg-blue-900 overflow-hidden text-xs font-medium text-white text-center"
         >
-          <p className="p-2.5">{text}</p>
+          <p className="p-2.5">{textAppbar}</p>
         </motion.div>
 
         <TopBar />

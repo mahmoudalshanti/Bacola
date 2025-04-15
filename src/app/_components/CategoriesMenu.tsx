@@ -7,16 +7,12 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { useRouter } from "next/navigation";
 import { useMenu } from "../_context/CategoriesMenuProvider";
 import { capitalizeIfAmpersand } from "@/lib/utils";
 import { Menu } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CategoryIcon from "./CategoreyIcon";
-import { useSession } from "next-auth/react";
-import getUser from "./getUser";
-import { useUser } from "../_context/UserProvider";
-import { actionContinueGoogle } from "../sign-in/_actions/actionSignIn";
+
 import Link from "next/link";
 
 function CategoriesMenuDesktop({ categories }: { categories: Category[] }) {
@@ -74,31 +70,6 @@ function DropdownMenuRadioGroupDemo({
 
 const CategoriesButton = () => {
   const { setOpen } = useMenu();
-  const { data } = useSession();
-  const { setUser } = useUser();
-  const router = useRouter();
-
-  useEffect(() => {
-    const handelGoogleSignInContinue = async () => {
-      try {
-        if (data) {
-          const result = await actionContinueGoogle(data?.user?.email || "");
-          if (result.redirect === "/") {
-            const user = await getUser();
-            if (user?.email) setUser(user);
-          } else {
-            router.push(result?.redirect || "/");
-          }
-
-          if ("errMsg" in result)
-            if (result.errMsg) throw new Error(result.errMsg);
-        }
-      } catch (err) {
-        console.error("Something went error by google auth", err);
-      }
-    };
-    handelGoogleSignInContinue();
-  }, [data]);
 
   return (
     <AccordionTrigger
