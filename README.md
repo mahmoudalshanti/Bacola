@@ -19,7 +19,7 @@ A modern full-stack e-commerce solution with secure payments, robust authenticat
   - 👤 End User - Customer access
 - **Multi-Login Options**:
   - 📧 Email/password signup & login
-  - 🔵 Google OAuth integration
+  - 🔵 (Google OAuth + OTP Email Verification with Mailtrap) integration 
 
 ### 🛒 E-Commerce Core
 - 🏪 Product catalog with categories
