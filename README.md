@@ -44,11 +44,6 @@ A modern full-stack e-commerce solution with secure payments, robust authenticat
 - Beautiful components using **shadcn/ui**
 - Responsive layout
 
-### 🔒 Security
-- Data protection measures
-- Secure payment processing
-- Input validation
-- Rate limiting
 
 ## 🚀 Technologies Used
 
