@@ -57,7 +57,7 @@ function Footer() {
 // Grocery List Component
 const GroceryList = async () => {
   const groceryItems = {
-    "Fruit & Vegetables": [
+    "Fruits & Vegetables": [
       "Fresh Vegetables",
       "Herbs & Seasonings",
       "Fresh Fruits",
@@ -76,7 +76,7 @@ const GroceryList = async () => {
       "Sour Cream and Dips",
       "Yogurt",
     ],
-    "Meat & Seafood": [
+    "Meats & Seafood": [
       "Breakfast Sausage",
       "Dinner Sausage",
       "Beef",
@@ -116,13 +116,13 @@ const GroceryList = async () => {
         {Object.entries(groceryItems).map(([category, items]) => (
           <div key={category}>
             <Link
-              href={`/product-category/${category}`}
+              href={`/product-category/${category.toLocaleLowerCase()}`}
               className="text-base font-semibold mb-4 block"
             >
               {category}
             </Link>
             <Link
-              href={`/product-category/${category}`}
+              href={`/product-category/${category.toLocaleLowerCase()}`}
               className="space-y-2 block"
             >
               {items.map((item) => (
